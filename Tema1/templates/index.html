@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:background-color="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Movie Search</title>
+    </head>
+    <body style="background-color:black;">
+        {% with messages = get_flashed_messages(category_filter=["movienames"]) %}
+            {% if messages %}
+                <ul style="color:white;">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul >
+            {% endif %}
+        {% endwith %}
+        <form action="" method="post">
+            {{ form.csrf }}
+
+            <div class="input text" style="color:white;">
+                {{ form.Gname.label }} {{ form.Gname }}
+            </div>
+            {% if showName %}
+                <div class="input text" style="color:white;">
+                    {{ form.Mname.label }} {{ form.Mname }}
+                </div>
+            {% endif %}
+            <div class="input submit">
+                <input type="submit" value="Submit" />
+            </div>
+        </form>
+        {% with Vmessages = get_flashed_messages(category_filter=["videos"]) %}
+        {% with Rmessages = get_flashed_messages(category_filter=["reviews"]) %}
+        {% with Cmessages = get_flashed_messages(category_filter=["comments"]) %}
+            {% if Rmessages or Vmessages or Cmessages%}
+                <h1 style="color:white;">Trailers</h1>
+                <ul style="color:white;" >
+                    {% for message in Vmessages %}
+                        <li>
+                            <a href={{ message[0] }}>{{ message[1] }}</a></li>
+                    {% endfor %}
+                </ul>
+                <h1 style="color:white;" >Critics Reviews</h1>
+                <ul style="color:white;" >
+                    {% for message in Rmessages %}
+                        <li style="color:{{message[0]}};" >{{ message[1] }}</li>
+                    {% endfor %}
+                </ul>
+                <h1 style="color:white;" >YouTube Comments</h1>
+                <ul style="color:white;" >
+                    {% for message in Cmessages %}
+                        <li style="color:{{message[0]}};" >{{ message[1] }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% endwith %}
+        {% endwith %}
+    </body>
+</html>
